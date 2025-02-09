@@ -1,0 +1,36 @@
+<nav class="p-4 pt-0 md:pt-8">
+    <ul class="space-y-1">
+        <li>
+            <a routerLink="/inicio" routerLinkActive="text-blue-400 font-bold"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="block p-2 text-white hover:text-blue-400 rounded transition-colors text-sm md:text-lg"
+                [ngClass]="{ 'text-blue-400 font-bold': isActive('/inicio') }">
+                {{ isActive('/inicio') ? '*' : 'Inicio' }}
+            </a>
+        </li>
+        <li>
+            <a routerLink="/contacto" routerLinkActive="text-blue-400 font-bold"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="block p-2 text-white hover:text-blue-400 rounded transition-colors text-sm md:text-lg"
+                [ngClass]="{ 'text-blue-400 font-bold': isActive('/contacto') }">
+                {{ isActive('/contacto') ? '*' : 'Contacto' }}
+            </a>
+        </li>
+        <li>
+            <a routerLink="/formacion" routerLinkActive="text-blue-400 font-bold"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="block p-2 text-white hover:text-blue-400 rounded transition-colors text-sm md:text-lg"
+                [ngClass]="{ 'text-blue-400 font-bold': isActive('/formacion') }">
+                {{ isActive('/formacion') ? '*' : 'Formación' }}
+            </a>
+        </li>
+        <li>
+            <a routerLink="/proyectos" routerLinkActive="text-blue-400 font-bold"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="block p-2 text-white hover:text-blue-400 rounded transition-colors text-sm md:text-lg"
+                [ngClass]="{ 'text-blue-400 font-bold': isActive('/proyectos') }">
+                {{ isActive('/proyectos') ? '*' : 'Proyectos' }}
+            </a>
+        </li>
+    </ul>
+</nav>

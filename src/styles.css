@@ -1,1 +1,51 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+@import "tailwindcss";
+
+
+
+
+body {
+    background-color: #191919;
+    margin: 0;
+    padding: 0;
+    font-family: 'Space Mono', monospace;
+}
+
+@keyframes gradientBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.moving-background {
+    background: linear-gradient(270deg, #000000, #1a1a1a, #333333, #000000);
+    background-size: 600% 600%;
+    animation: gradientBackground 16s ease infinite;
+}
+
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+.animate-text {
+    animation: fadeInText 1s ease-in-out;
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+}

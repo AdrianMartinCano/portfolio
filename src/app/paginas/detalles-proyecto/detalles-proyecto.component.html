@@ -1,0 +1,54 @@
+<div
+    class="absolute left-280 top-20 moving-background p-6 rounded-2xl shadow-lg border border-gray-700 text-center transition-all hover:shadow-xl select-none">
+    <!-- Botón de volver -->
+    <button class="flex items-center text-gray-200 hover:text-blue-400 transition-all cursor-pointer"
+        (click)="volverAProyectos()">
+        <i class="fas fa-arrow-left mr-2"></i>
+        Volver a proyectos
+    </button>
+
+    <!-- Contenido -->
+    <div class="ml-2 md:ml-4 lg:ml-6 max-w-md w-full mt-4">
+        <h2 class="text-3xl font-bold text-white mb-2">
+            {{ proyecto.nombre }}
+        </h2>
+
+        <p class="text-lg text-gray-300 mb-2">
+            <b>Tipo de Proyecto:</b> {{ proyecto.tipo }}
+        </p>
+
+        <p class="text-lg text-gray-300 mb-4">
+            <b>Descripción:</b> {{ proyecto.descripcion }}
+        </p>
+
+        <!-- Lista de tecnologías -->
+        <div class="mb-4">
+            <b class="text-lg text-white">Tecnologías usadas:</b>
+            <ul class="list-disc pl-5 text-gray-400">
+                <li *ngFor="let tech of proyecto.tecnologias">{{ tech }}</li>
+            </ul>
+        </div>
+
+        <!-- Lista de características -->
+        <div class="mb-4">
+            <b class="text-lg text-white">Características:</b>
+            <ul class="list-disc pl-5 text-gray-400">
+                <li *ngFor="let feature of proyecto.caracteristicas">{{ feature }}</li>
+            </ul>
+        </div>
+
+        <p class="text-lg text-gray-300">
+            <b>Fecha:</b> {{ proyecto.fecha }}
+        </p>
+
+        <p class="text-lg text-gray-300 mb-4">
+            <b>Estado:</b> {{ proyecto.estado }}
+        </p>
+
+        <!-- Botón de repositorio con efecto glow -->
+        <a [href]="proyecto.repositorio" target="_blank"
+            class="px-6 py-2 border border-gray-400 text-gray-300 font-semibold rounded-lg hover:bg-gray-800 hover:text-white transition-all shadow-md hover:shadow-gray-500/50">
+            Ver repositorio
+        </a>
+    </div>
+</div>

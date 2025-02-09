@@ -1,0 +1,13 @@
+<div class="absolute inset-0 overflow-auto mt-0 ml-0 lg:mt-50 lg:ml-60 select-none">
+    <div class="p-4">
+        <ul class="list-none">
+            <li *ngFor="let formacion of formaciones"
+                class="flex flex-col justify-between text-center rounded-lg p-2 mb-4">
+                <h3 class="text-xs md:text-xl font-semibold text-gray-400">{{ formacion.grado }}</h3>
+                <p class="text-xs md:text-sm text-gray-300">{{ formacion.centro }}</p>
+                <p class="text-xs md:text-sm text-gray-300">{{ formacion.fechaInicio }} - {{ formacion.fechaFin }}</p>
+                <p class="text-xs md:text-sm text-gray-300"><b>Competencias:</b> {{ formacion.competencias }}</p>
+            </li>
+        </ul>
+    </div>
+</div>
