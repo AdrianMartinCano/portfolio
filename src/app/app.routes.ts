@@ -7,10 +7,10 @@ import { DetallesProyectoComponent } from './paginas/detalles-proyecto/detalles-
 export const routes: Routes = [
  
  {path: 'inicio', component: InicioComponent},
- {path: 'proyectos', component: ProyectosComponent},
+ {path: 'proyectos', component: ProyectosComponent,  data: { animation: 'proyectos' }},
  {path: 'contacto', component: ContactoComponent},
  {path:'formacion', component: FormacionComponent},
- {path:'detalles/:id',component: DetallesProyectoComponent},
+ {path:'detalles/:id',component: DetallesProyectoComponent, data: { animation: 'detalles' } },
  {path:'', redirectTo: '/inicio', pathMatch: 'full'},
  {path:'**', redirectTo: '/inicio'}
 ];

@@ -4,16 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
 
-import { ProyectosService
-  
- } from '../../servicios/proyectos/proyectos.service';
+import { ProyectosService} from '../../servicios/proyectos/proyectos.service';
+
 @Component({
   selector: 'app-detalles-proyecto',
   templateUrl: './detalles-proyecto.component.html',
   styleUrls: ['./detalles-proyecto.component.css'],
   standalone: true,
   imports: [CommonModule],
-  
+ 
 })
 export class DetallesProyectoComponent implements OnInit {
   proyecto: any;
