@@ -25,11 +25,26 @@
             </a>
         </li>
         <li>
+            <a routerLink="/experiencia" routerLinkActive="text-blue-400 font-bold"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="block p-2 text-white hover:text-blue-400 rounded transition-colors text-sm md:text-lg"
+                [ngClass]="{ 'text-blue-400 font-bold': isActive('/experiencia') }">
+                {{ isActive('/experiencia') ? '*' : 'Experiencia' }}
+            </a>
+        </li>
+        <li>
             <a routerLink="/proyectos" routerLinkActive="text-blue-400 font-bold"
                 [routerLinkActiveOptions]="{ exact: true }"
                 class="block p-2 text-white hover:text-blue-400 rounded transition-colors text-sm md:text-lg"
                 [ngClass]="{ 'text-blue-400 font-bold': isActive('/proyectos') }">
                 {{ isActive('/proyectos') ? '*' : 'Proyectos' }}
+            </a>
+        </li>
+
+        <li>
+            <a (click)="descargarArchivo()"
+                class="block p-2 font-mono text-white hover:text-blue-400 rounded transition-colors text-sm md:text-lg cursor-pointer">
+                Descargar CV
             </a>
         </li>
     </ul>

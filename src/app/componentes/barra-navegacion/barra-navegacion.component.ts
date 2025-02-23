@@ -15,4 +15,12 @@ export class BarraNavegacionComponent {
   isActive(route: string): boolean {
     return this.router.url === route;
   }
+
+  descargarArchivo() {
+    const link = document.createElement('a');
+    link.href = 'assets/AdrianMartinCano.pdf';
+    link.download = 'Adrian Martin Cano CV.pdf';
+    link.click();
+  }
+
 }
