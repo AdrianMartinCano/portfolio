@@ -11,7 +11,7 @@ export const routes: Routes = [
  {path: 'proyectos', component: ProyectosComponent,  data: { animation: 'proyectos' }},
  {path: 'contacto', component: ContactoComponent},
  {path:'formacion', component: FormacionComponent},
- {path:'detalles/:id',component: DetallesProyectoComponent, data: { animation: 'detalles' } },
+ {path:'proyecto/:slug',component: DetallesProyectoComponent, data: { animation: 'detalles' } },
  {path: 'experiencia', component: ExperienciaComponent},
  {path:'', redirectTo: '/inicio', pathMatch: 'full'},
  {path:'**', redirectTo: '/inicio'}

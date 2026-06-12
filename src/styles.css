@@ -1,51 +1,82 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
 @import "tailwindcss";
 
+/* ── Temas de terminal (paleta tipo GitHub dark/light) ───────────── */
 
+:root {
+    color-scheme: dark;
+    --fondo-pagina: #010409;
+    --term-fondo: #0d1117;
+    --term-chrome: #161b22;
+    --term-borde: #30363d;
+    --term-texto: #e6edf3;
+    --term-apagado: #8b949e;
+    --term-verde: #3fb950;
+    --term-azul: #58a6ff;
+    --term-rojo: #f85149;
+    --term-ambar: #d29922;
+}
 
+[data-tema='claro'] {
+    color-scheme: light;
+    --fondo-pagina: #eaeef2;
+    --term-fondo: #ffffff;
+    --term-chrome: #f6f8fa;
+    --term-borde: #d0d7de;
+    --term-texto: #1f2328;
+    --term-apagado: #57606a;
+    --term-verde: #1a7f37;
+    --term-azul: #0969da;
+    --term-rojo: #cf222e;
+    --term-ambar: #9a6700;
+}
+
+/* Expone las variables como utilidades de Tailwind:
+   bg-fondo, bg-term, bg-chrome, border-borde,
+   text-texto, text-apagado, text-verde, text-azul, text-rojo... */
+@theme inline {
+    --color-fondo: var(--fondo-pagina);
+    --color-term: var(--term-fondo);
+    --color-chrome: var(--term-chrome);
+    --color-borde: var(--term-borde);
+    --color-texto: var(--term-texto);
+    --color-apagado: var(--term-apagado);
+    --color-verde: var(--term-verde);
+    --color-azul: var(--term-azul);
+    --color-rojo: var(--term-rojo);
+    --color-ambar: var(--term-ambar);
+}
 
 body {
-    background-color: #191919;
+    background-color: var(--fondo-pagina);
+    color: var(--term-texto);
     margin: 0;
     padding: 0;
     font-family: 'Space Mono', monospace;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+/* Scrollbar fina y con los colores del tema (Firefox) */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--term-borde) transparent;
 }
 
-@keyframes gradientBackground {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+/* Scrollbar (Chrome/Edge/Safari) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
 
-.moving-background {
-    background: linear-gradient(270deg, #000000, #1a1a1a, #333333, #000000);
-    background-size: 600% 600%;
-    animation: gradientBackground 16s ease infinite;
+::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+::-webkit-scrollbar-thumb {
+    background: var(--term-borde);
+    border-radius: 4px;
 }
 
-
-.animate-text {
-    animation: fadeInText 1s ease-in-out;
-    animation-delay: 0.3s;
-    animation-fill-mode: both;
+::-webkit-scrollbar-thumb:hover {
+    background: var(--term-apagado);
 }
+

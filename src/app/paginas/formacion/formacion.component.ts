@@ -1,37 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+
+interface Formacion {
+  grado: string;
+  centro: string;
+  fechaInicio: string;
+  fechaFin: string;
+  competencias: string;
+}
 
 @Component({
   selector: 'app-formacion',
-  imports: [CommonModule],
-   standalone: true,
+  standalone: true,
+  imports: [CommonModule, TranslocoPipe],
   templateUrl: './formacion.component.html',
   styleUrl: './formacion.component.css'
-  
 })
 export class FormacionComponent {
-
-  formaciones = [
-    {
-    grado: 'Desarrollo de aplicaciones multiplataforma',
-    centro : 'Escolapios de Gefate',
-    fechaInicio: '2022',
-    fechaFin: '2024',
-    competencias:'IntelliJ, Visual Studio Code, Eclipse, SQL, Hibernate'
-  },
-  {
-    grado: 'Ingeniería Informática (No Completado)',
-    centro: 'Universidad a Distancia',
-    fechaInicio:'2020',
-    fechaFin:'2021',
-    competencias:'Conocimientos en programación avanzada, algoritmos y estructuras de datos, sistemas operativos'
-  },
-  {
-    grado: 'Ingeniería Informática (No Completado)',
-    centro: 'Universidad Carlos III de Madrid',
-    fechaInicio:'2014',
-    fechaFin:'2019',
-    competencias:'Fundamentos de programación, redes de computadores, bases de datos'
-  }
-];
+  formaciones = toSignal(
+    inject(TranslocoService).selectTranslateObject<Formacion[]>('datos.formacion'),
+    { initialValue: [] as Formacion[] }
+  );
 }
