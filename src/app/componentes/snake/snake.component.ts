@@ -51,7 +51,7 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
     medidor.className = this.tableroPre.nativeElement.className;
     medidor.style.position = 'absolute';
     medidor.style.visibility = 'hidden';
-    medidor.textContent = '██████████\n██████████';
+    medidor.textContent = '##########\n##########';
     zona.appendChild(medidor);
     const rect = medidor.getBoundingClientRect();
     const anchoChar = rect.width / 10;
@@ -173,24 +173,26 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
     } while (this.serpiente.some(c => c.x === this.comida.x && c.y === this.comida.y));
   }
 
+  // Solo caracteres ASCII: Space Mono no tiene los glifos de caja (─│┌█) y los
+  // móviles los sustituyen por glifos de otro ancho, descuadrando el tablero
   private dibujar() {
     const ocupadas = new Set(this.serpiente.map(c => `${c.x},${c.y}`));
     const filas: string[] = [];
-    filas.push('┌' + '─'.repeat(this.columnas * 2) + '┐');
+    filas.push('+' + '-'.repeat(this.columnas * 2) + '+');
     for (let y = 0; y < this.filas; y++) {
-      let fila = '│';
+      let fila = '|';
       for (let x = 0; x < this.columnas; x++) {
         if (ocupadas.has(`${x},${y}`)) {
-          fila += '██';
+          fila += '##';
         } else if (x === this.comida.x && y === this.comida.y) {
           fila += '<>';
         } else {
           fila += '  ';
         }
       }
-      filas.push(fila + '│');
+      filas.push(fila + '|');
     }
-    filas.push('└' + '─'.repeat(this.columnas * 2) + '┘');
+    filas.push('+' + '-'.repeat(this.columnas * 2) + '+');
     this.tablero.set(filas.join('\n'));
   }
 }
