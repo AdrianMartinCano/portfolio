@@ -90,11 +90,15 @@ export class InicioComponent implements OnInit {
       this.runHireSequence();
     } else if (key === 'n') {
       e.preventDefault();
-      this.hireMode.set(false);
-      this.hireOutput.set([]);
-      this.terminalInputValue.set('');
-      this.focusTerminal();
+      this.cancelarHire();
     }
+  }
+
+  private cancelarHire() {
+    this.hireMode.set(false);
+    this.hireOutput.set([]);
+    this.terminalInputValue.set('');
+    this.focusTerminal();
   }
 
   private async animar() {
@@ -140,10 +144,24 @@ export class InicioComponent implements OnInit {
   }
 
   ejecutarComando() {
-    if (this.hireMode()) return;
-
     const cmd = this.terminalInputValue().trim().toLowerCase();
     this.terminalInputValue.set('');
+    // Limpia también el DOM: con teclados virtuales (IME) el binding [value]
+    // puede no reescribir el input y el comando se quedaría visible
+    if (this.terminalInput?.nativeElement) {
+      this.terminalInput.nativeElement.value = '';
+    }
+
+    // En modo hire, la confirmación también puede llegar escrita + Enter:
+    // los teclados virtuales móviles no emiten keydown con la tecla real
+    if (this.hireMode()) {
+      if (['y', 'yes', 's', 'si', 'sí'].includes(cmd)) {
+        this.runHireSequence();
+      } else if (['n', 'no'].includes(cmd)) {
+        this.cancelarHire();
+      }
+      return;
+    }
 
     // Enter en vacío: solo repite el prompt, como en bash
     if (!cmd) {
@@ -158,7 +176,11 @@ export class InicioComponent implements OnInit {
     this.scrollToBottom();
   }
 
+  private hireEnCurso = false;
+
   private async runHireSequence() {
+    if (this.hireEnCurso) return;
+    this.hireEnCurso = true;
     this.hireOutput.set([]);
     const lineas = this.transloco.translateObject<string[]>('inicio.hireSequence');
     const esperas = [800, 700, 700, 600];
@@ -170,6 +192,7 @@ export class InicioComponent implements OnInit {
     }
 
     this.hireMode.set(false);
+    this.hireEnCurso = false;
     this.router.navigate(['/contacto']);
   }
 

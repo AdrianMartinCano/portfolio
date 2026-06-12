@@ -59,9 +59,10 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
     zona.removeChild(medidor);
 
     const disponible = zona.getBoundingClientRect();
-    // Cada celda son 2 caracteres de ancho; bordes: 2 chars y 2 líneas
-    this.columnas = Math.min(60, Math.max(10, Math.floor((disponible.width / anchoChar - 2) / 2)));
-    this.filas = Math.min(40, Math.max(8, Math.floor(disponible.height / altoLinea) - 2));
+    // Cada celda son 2 caracteres de ancho; bordes: 2 chars y 2 líneas.
+    // Sin tope superior: el tablero llena la terminal como un juego ncurses
+    this.columnas = Math.max(10, Math.floor((disponible.width / anchoChar - 2) / 2));
+    this.filas = Math.max(8, Math.floor(disponible.height / altoLinea) - 2);
   }
 
   reiniciar() {
