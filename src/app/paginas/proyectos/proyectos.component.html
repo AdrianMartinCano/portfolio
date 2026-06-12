@@ -6,12 +6,13 @@
     <ul class="list-none space-y-1">
         <!-- Selección estilo TUI (fzf/htop): vídeo inverso, sin transición para que "salte" como una terminal -->
         <li *ngFor="let proyecto of listaProyectos()"
-            class="group cursor-pointer flex items-baseline gap-3 sm:gap-4 px-2 py-1.5 hover:bg-texto"
+            class="group cursor-pointer flex items-baseline gap-2 sm:gap-4 px-2 py-1.5 hover:bg-texto"
             (click)="verDetalles(proyecto.slug)">
-            <span aria-hidden="true" class="w-3 flex-shrink-0 font-bold text-verde opacity-0 group-hover:opacity-100 group-hover:text-term">&gt;</span>
-            <span aria-hidden="true" class="hidden sm:inline text-ambar w-[10ch] flex-shrink-0 group-hover:text-term">{{ permisosSimbolicos(proyecto) }}</span>
+            <!-- El puntero solo existe en hover; en móvil no hay hover, así que se oculta y libera espacio -->
+            <span aria-hidden="true" class="hidden sm:inline w-3 flex-shrink-0 font-bold text-verde opacity-0 group-hover:opacity-100 group-hover:text-term">&gt;</span>
+            <span aria-hidden="true" class="text-ambar w-[10ch] flex-shrink-0 group-hover:text-term">{{ permisosSimbolicos(proyecto) }}</span>
             <span aria-hidden="true" class="text-apagado w-[3ch] flex-shrink-0 group-hover:text-term">{{ permisos(proyecto) }}</span>
-            <span class="text-xs text-apagado w-20 flex-shrink-0 group-hover:text-term">{{ proyecto.tipo }}</span>
+            <span class="text-xs text-apagado w-16 sm:w-20 flex-shrink-0 group-hover:text-term">{{ proyecto.tipo }}</span>
             <span class="font-bold text-azul group-hover:text-term">{{ proyecto.nombre }}/</span>
         </li>
     </ul>
