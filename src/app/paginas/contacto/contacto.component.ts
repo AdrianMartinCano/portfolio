@@ -31,6 +31,13 @@ export class ContactoComponent implements OnDestroy {
   enviando = signal(false);
   estado = signal<EstadoEnvio>('idle');
 
+  // Fecha y hora local para las líneas de "enlaces.log"
+  protected readonly logTimestamp = (() => {
+    const d = new Date();
+    const p = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+  })();
+
   private temporizador?: ReturnType<typeof setTimeout>;
 
   enviar(f: NgForm) {

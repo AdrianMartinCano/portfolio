@@ -1,25 +1,27 @@
-<div class="p-4 md:p-8 text-sm md:text-base max-w-xl">
+<div class="p-4 md:p-8 text-sm md:text-base max-w-3xl">
     <!-- Enlaces arriba, formato log -->
     <p class="mb-2">
         <span class="text-verde">adrian&#64;portfolio</span><span class="text-apagado">:</span><span class="text-azul">~</span><span class="text-apagado">$&nbsp;</span><span class="text-texto">cat enlaces.log</span>
     </p>
-    <ul class="mb-8 font-mono text-xs md:text-sm space-y-1">
+    <ul class="mb-8 font-mono text-xs sm:text-sm space-y-1 overflow-x-auto">
         <li>
             <a href="https://github.com/AdrianMartinCano" target="_blank" rel="noopener"
-               class="group inline-flex items-baseline gap-2 hover:underline">
-                <span class="text-apagado">[<span class="text-verde">INFO</span>]</span>
-                <span class="text-azul w-16 inline-block">github</span>
+               class="group inline-flex items-baseline gap-x-2 whitespace-nowrap hover:underline">
+                <span class="hidden sm:inline text-apagado">{{ logTimestamp }}</span>
+                <span class="text-verde">INFO</span>
+                <span class="text-azul">social.github</span>
                 <span class="text-apagado">&rarr;</span>
-                <span class="text-texto group-hover:text-azul break-all transition-colors">github.com/AdrianMartinCano</span>
+                <span class="text-texto group-hover:text-azul transition-colors">github.com/AdrianMartinCano</span>
             </a>
         </li>
         <li>
-            <a href="https://www.linkedin.com/in/adrian-martin-cano/" target="_blank" rel="noopener"
-               class="group inline-flex items-baseline gap-2 hover:underline">
-                <span class="text-apagado">[<span class="text-verde">INFO</span>]</span>
-                <span class="text-azul w-16 inline-block">linkedin</span>
+            <a href="https://www.linkedin.com/in/adrianmartincano/" target="_blank" rel="noopener"
+               class="group inline-flex items-baseline gap-x-2 whitespace-nowrap hover:underline">
+                <span class="hidden sm:inline text-apagado">{{ logTimestamp }}</span>
+                <span class="text-verde">INFO</span>
+                <span class="text-azul">social.linkedin</span>
                 <span class="text-apagado">&rarr;</span>
-                <span class="text-texto group-hover:text-azul break-all transition-colors">linkedin.com/in/adrian-martin-cano</span>
+                <span class="text-texto group-hover:text-azul transition-colors">linkedin.com/in/adrianmartincano</span>
             </a>
         </li>
     </ul>
@@ -72,6 +74,11 @@
                 <textarea id="mensaje" name="mensaje" rows="5" required maxlength="2000"
                           [(ngModel)]="formulario.mensaje"
                           class="w-full bg-transparent border border-borde rounded text-texto px-2 py-1 focus:outline-none focus:border-azul resize-none"></textarea>
+                <p class="text-right text-xs mt-1 font-mono"
+                   [class.text-apagado]="formulario.mensaje.length < 1800"
+                   [class.text-ambar]="formulario.mensaje.length >= 1800">
+                    {{ formulario.mensaje.length }}/2000
+                </p>
             </div>
         </div>
 
