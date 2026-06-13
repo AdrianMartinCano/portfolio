@@ -38,7 +38,6 @@ export class InicioComponent implements OnInit {
   historial = signal<EntradaHistorial[]>([]);
   terminalInputValue = signal('');
   hireMode = signal(false);
-  hireOutput = signal<string[]>([]);
   snakeActivo = signal(false);
 
   @ViewChild('terminalScroll') terminalScroll!: ElementRef<HTMLDivElement>;
@@ -67,6 +66,31 @@ export class InicioComponent implements OnInit {
     })
   );
 
+  // ── Salida del 'sudo hire' (reactiva al idioma, como help) ──
+  // Traducciones reactivas: se re-emiten al cambiar de idioma.
+  private hirePromptLines = toSignal(
+    this.transloco.selectTranslateObject<string[]>('inicio.hire'),
+    { initialValue: [] as string[] }
+  );
+  private hireSeqLines = toSignal(
+    this.transloco.selectTranslateObject<string[]>('inicio.hireSequence'),
+    { initialValue: [] as string[] }
+  );
+  // Fase actual y cuántas líneas de la secuencia se muestran. La animación
+  // solo mueve este contador; el texto sale de las señales de arriba, así que
+  // al cambiar de idioma se re-traduce solo (incluso a media secuencia).
+  private hireFase = signal<'prompt' | 'secuencia'>('prompt');
+  private hireSeqVisibles = signal(0);
+
+  hireOutput = computed<string[]>(() => {
+    if (this.hireFase() === 'secuencia') {
+      const seq = this.hireSeqLines();
+      return Array.isArray(seq) ? seq.slice(0, this.hireSeqVisibles()) : [];
+    }
+    const prompt = this.hirePromptLines();
+    return Array.isArray(prompt) ? prompt : [];
+  });
+
   constructor(private router: Router) {}
 
   // Cada comando devuelve las líneas que imprime en la terminal
@@ -76,8 +100,8 @@ export class InicioComponent implements OnInit {
       return [];
     },
     'sudo hire adrian': () => {
+      this.hireFase.set('prompt');
       this.hireMode.set(true);
-      this.hireOutput.set(this.transloco.translateObject<string[]>('inicio.hire'));
       return [];
     },
     'replay': () => {
@@ -143,6 +167,8 @@ export class InicioComponent implements OnInit {
     setTimeout(() => {
       this.historial.set([]);
       this.hireMode.set(false);
+      this.hireFase.set('prompt');
+      this.hireSeqVisibles.set(0);
       this.snakeActivo.set(false);
       this.resetIntro();
       this.animar();
@@ -166,7 +192,8 @@ export class InicioComponent implements OnInit {
 
   private cancelarHire() {
     this.hireMode.set(false);
-    this.hireOutput.set([]);
+    this.hireFase.set('prompt');
+    this.hireSeqVisibles.set(0);
     this.terminalInputValue.set('');
     this.focusTerminal();
   }
@@ -259,18 +286,21 @@ export class InicioComponent implements OnInit {
   private async runHireSequence() {
     if (this.hireEnCurso) return;
     this.hireEnCurso = true;
-    this.hireOutput.set([]);
-    const lineas = this.transloco.translateObject<string[]>('inicio.hireSequence');
+    this.hireFase.set('secuencia');
+    this.hireSeqVisibles.set(0);
+    const total = this.hireSeqLines().length;
     const esperas = [800, 700, 700, 600];
 
-    for (let i = 0; i < lineas.length; i++) {
-      this.hireOutput.update(arr => [...arr, lineas[i]]);
+    for (let i = 0; i < total; i++) {
+      this.hireSeqVisibles.update(n => n + 1);
       this.scrollToBottom();
       await this.esperar(esperas[i] ?? 700);
     }
 
     this.hireMode.set(false);
     this.hireEnCurso = false;
+    this.hireFase.set('prompt');
+    this.hireSeqVisibles.set(0);
     this.router.navigate(['/contacto']);
   }
 
