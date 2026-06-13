@@ -1,82 +1,45 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslocoService } from '@jsverse/transloco';
+import { datosDesdeApi } from '../datos-api/datos-api';
+
+export interface Repositorio {
+  etiqueta: string;
+  url: string;
+}
+
+export interface Proyecto {
+  slug: string;
+  nombre: string;
+  tipo: string;
+  // Permisos octales estilo chmod con semántica propia (755 desplegado, 555 archivado, 777 experimental...)
+  permisos?: string;
+  descripcion: string;
+  imagen?: string;
+  repositorios: Repositorio[];
+  demo?: string;
+  tecnologias: string[];
+  caracteristicas: string[];
+  problema?: string;
+  aprendizajes?: string;
+  fecha: string;
+  estado: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProyectosService {
-  listaProyectos = [
-  {
-    nombre: "KeyCloud",
-    tipo: "Frontend",
-    descripcion: "Gestor de contraseñas seguro con Angular",
-    repositorio: "https://github.com/AdrianMartinCano/keycloud-front",
-    tecnologias: ["Angular 16", "TypeScript", "CSS", "Node.js"],
-    caracteristicas: [
-      "Encriptación AES con CryptoJS",
-      "CRUD de contraseñas",
-      "Autenticación de usuarios",
-    ],
-    
-    fecha: "Enero 2025",
-    estado: "Terminado",
-  },
-  {
-    nombre: "KeyCloud",
-    tipo: "Backend",
-    descripcion: "API para la gestión de contraseñas",
-    repositorio: "https://github.com/AdrianMartinCano/keycloud",
-    tecnologias: ["Java", "JPA", "Spring Boot", "Maven", "Docker", "MySQL"],
-    caracteristicas: [
-      "Autenticación y creación de usuarios",
-      "CRUD de contraseñas",
-      "Gestión de dependencias con Maven",
-      "Base de datos en MySQL",
-      "Contenedorizado con Docker",
-    ],
-    
-    fecha: "Enero 2025",
-    estado: "Terminado",
-  },
-  {
-    nombre: "Gas-Path",
-    tipo: "Movil",
-    descripcion: "Buscador de gasolineras según ubicación",
-    repositorio: "https://github.com/AdrianMartinCano/Gas-Path",
-    tecnologias: ["Kotlin", "Jetpack Compose", "Firebase", "Google Maps API"],
-    caracteristicas: [
-      "Arquitectura MVVM",
-      "Uso de Google Maps API",
-      "Autenticación con Firebase",
-    ],
-   
-    fecha: "Junio 2024",
-    estado: "Terminado",
-  },
-  {
-    nombre: "Portfolio",
-    tipo: "Frontend",
-    descripcion: "Código fuente de esta web",
-    repositorio: "https://github.com/AdrianMartinCano/portfolio",
-    demo: "https://adrianmartincano.github.io/",
-    tecnologias: ["Angular 19", "TypeScript", "Tailwind", "Node.js"],
-    caracteristicas: [
-      "Desarrollado con Angular 19",
-      "Diseño responsive con Tailwind CSS",
-      "Despliegue en GitHub Pages",
-      
-    ],
-    
-    fecha: "Enero 2025",
-    estado: "Terminado",
-  },
-  
-];
+  private http = inject(HttpClient);
+  private transloco = inject(TranslocoService);
 
+  // Pide los proyectos a la API (con el idioma activo); si falla, cae
+  // a los JSON locales de i18n (public/i18n/*.json)
+  private api = datosDesdeApi<Proyecto>(this.http, this.transloco, 'proyectos', 'proyectos');
+  proyectos = this.api.datos;
+  cargando = this.api.cargando;
 
-  constructor() { }
-
- 
-  getProyecto(index: number) {
-    return this.listaProyectos[index];
+  getProyecto(slug: string): Proyecto | undefined {
+    return this.proyectos().find(p => p.slug === slug);
   }
 }

@@ -1,37 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
+import { SpinnerTerminalComponent } from '../../componentes/spinner-terminal/spinner-terminal.component';
+import { FormacionService } from '../../servicios/formacion/formacion.service';
 
 @Component({
   selector: 'app-formacion',
-  imports: [CommonModule],
-   standalone: true,
-  templateUrl: './formacion.component.html',
-  styleUrl: './formacion.component.css'
-  
+  standalone: true,
+  imports: [CommonModule, TranslocoPipe, SpinnerTerminalComponent],
+  templateUrl: './formacion.component.html'
 })
 export class FormacionComponent {
-
-  formaciones = [
-    {
-    grado: 'Desarrollo de aplicaciones multiplataforma',
-    centro : 'Escolapios de Gefate',
-    fechaInicio: '2022',
-    fechaFin: '2024',
-    competencias:'IntelliJ, Visual Studio Code, Eclipse, SQL, Hibernate'
-  },
-  {
-    grado: 'Ingeniería Informática (No Completado)',
-    centro: 'Universidad a Distancia',
-    fechaInicio:'2020',
-    fechaFin:'2021',
-    competencias:'Conocimientos en programación avanzada, algoritmos y estructuras de datos, sistemas operativos'
-  },
-  {
-    grado: 'Ingeniería Informática (No Completado)',
-    centro: 'Universidad Carlos III de Madrid',
-    fechaInicio:'2014',
-    fechaFin:'2019',
-    competencias:'Fundamentos de programación, redes de computadores, bases de datos'
-  }
-];
+  private servicio = inject(FormacionService);
+  formaciones = this.servicio.formaciones;
+  cargando = this.servicio.cargando;
 }

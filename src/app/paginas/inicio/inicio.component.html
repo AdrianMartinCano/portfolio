@@ -1,17 +1,176 @@
-<div class="flex justify-end items-center h-full select-none px-2 sm:px-4">
-    <div class="w-full sm:max-w-md md:max-w-2xl rounded-lg p-4 pt-0 md:p-6 md:pt-6">
-        <p class="text-gray-900 dark:text-gray-100 text-xs md:text-xl leading-normal textAnimation">
-            Nacido en 1994<br>
-            en <b class="animate-text">Madrid, España.</b><br><br>
-            Creo que el diseño<br>
-            debe <b class="animate-text">ser simple<br>
-                y funcional.</b><br><br>
-            Mi misión es <b class="animate-text">crear<br>
-                experiencias intuitivas<br>
-                y elegantes,</b><br>
-            donde cada detalle<br>
-            tiene un propósito.
+<!-- PANTALLA ALTERNATIVA: el snake limpia la terminal y ocupa todo, como un juego ncurses -->
+@if (snakeActivo()) {
+  <div class="h-full p-2 sm:p-4 font-mono text-sm md:text-base">
+    <app-snake class="block h-full" (salir)="cerrarSnake()"></app-snake>
+  </div>
+} @else {
+<div class="px-2 sm:px-4 md:px-8 py-4 md:py-8 font-mono">
+  <div class="flex flex-col items-start">
+    <!-- SESIÓN DE TERMINAL (el scroll lo gestiona el área de contenido de la ventana) -->
+    <div #terminalScroll class="w-full text-sm md:text-base leading-relaxed space-y-4">
+
+    <!-- SECUENCIA DE ARRANQUE -->
+    <div class="space-y-4">
+
+      <!-- WHOAMI -->
+      <div>
+        <p>
+          <span class="text-verde">adrian&#64;portfolio</span>
+          <span class="text-apagado">:</span>
+          <span class="text-azul">~</span>
+          <span class="text-apagado">$&nbsp;</span>
+          <span class="text-texto">{{ comando1() }}</span>
+          @if (cursorEn() === 1) {
+            <span class="cursor">&#9610;</span>
+          }
         </p>
 
+        @if (mostrarSalida1()) {
+          <p class="text-texto mt-1">Adrián Martín Cano</p>
+        }
+      </div>
+
+      <!-- CAT SOBRE-MI -->
+      <div>
+        @if (comandoCat().length > 0) {
+          <p>
+            <span class="text-verde">adrian&#64;portfolio</span>
+            <span class="text-apagado">:</span>
+            <span class="text-azul">~</span>
+            <span class="text-apagado">$&nbsp;</span>
+            <span class="text-texto">{{ comandoCat() }}</span>
+            @if (cursorEn() === 2) {
+              <span class="cursor">&#9610;</span>
+            }
+          </p>
+        }
+
+        @if (mostrarSalidaCat()) {
+          <p class="text-texto mt-1 leading-relaxed">{{ 'inicio.bio' | transloco }}</p>
+        }
+      </div>
+
+      <!-- NEOFETCH -->
+      <div>
+        @if (comandoNeofetch().length > 0) {
+          <p>
+            <span class="text-verde">adrian&#64;portfolio</span>
+            <span class="text-apagado">:</span>
+            <span class="text-azul">~</span>
+            <span class="text-apagado">$&nbsp;</span>
+            <span class="text-texto">{{ comandoNeofetch() }}</span>
+            @if (cursorEn() === 3) {
+              <span class="cursor">&#9610;</span>
+            }
+          </p>
+        }
+
+        @if (mostrarSalidaNeofetch()) {
+          <div class="mt-2 flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-10">
+            <pre aria-hidden="true" class="text-azul leading-none text-[10px] sm:text-xs md:text-sm">    _     ____   ____   ___     _     _   _
+   / \   |  _ \ |  _ \ |_ _|   / \   | \ | |
+  / _ \  | | | || |_) | | |   / _ \  |  \| |
+ / ___ \ | |_| ||  _ <  | |  / ___ \ | |\  |
+/_/   \_\|____/ |_| \_\|___|/_/   \_\|_| \_|</pre>
+
+            <div class="grid grid-cols-[auto_auto] gap-x-3 gap-y-1 text-sm whitespace-nowrap">
+              <span class="text-verde">{{ 'inicio.neoName' | transloco }}</span><span>Adrián Martín Cano</span>
+              <span class="text-verde">{{ 'inicio.neoRole' | transloco }}</span><span>{{ 'inicio.neoRoleValue' | transloco }}</span>
+              <span class="text-verde">Backend</span><span>Java, Spring Boot</span>
+              <span class="text-verde">Frontend</span><span>Angular, TypeScript</span>
+              <span class="text-verde">{{ 'inicio.neoDatabase' | transloco }}</span><span>Oracle, MariaDB</span>
+              <span class="text-verde">DevOps</span><span>Docker, Jenkins</span>
+              <span class="text-verde">{{ 'inicio.neoExperience' | transloco }}</span><span>{{ 'inicio.neoExperienceValue' | transloco }}</span>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- LS -->
+      <div>
+        @if (mostrarLinea2()) {
+          <p>
+            <span class="text-verde">adrian&#64;portfolio</span>
+            <span class="text-apagado">:</span>
+            <span class="text-azul">~</span>
+            <span class="text-apagado">$&nbsp;</span>
+            <span class="text-texto">{{ comando2() }}</span>
+            @if (cursorEn() === 4) {
+              <span class="cursor">&#9610;</span>
+            }
+          </p>
+        }
+
+        @if (mostrarSalida2()) {
+          <div class="mt-1 flex flex-wrap gap-x-6 gap-y-1">
+            <a routerLink="/proyectos" class="text-azul font-bold hover:underline">{{ 'nav.proyectos' | transloco }}/</a>
+            <a routerLink="/experiencia" class="text-azul font-bold hover:underline">{{ 'nav.experiencia' | transloco }}/</a>
+            <a routerLink="/formacion" class="text-azul font-bold hover:underline">{{ 'nav.formacion' | transloco }}/</a>
+            <a routerLink="/contacto" class="text-azul font-bold hover:underline">{{ 'nav.contacto' | transloco }}/</a>
+
+            <button (click)="cv.descargar()" class="text-verde hover:underline cursor-pointer">
+              cv.pdf
+            </button>
+          </div>
+        }
+      </div>
+
     </div>
+
+    <!-- HISTORIAL DE COMANDOS DEL VISITANTE -->
+    @for (entrada of historial(); track $index) {
+      <div>
+        <p>
+          <span class="text-verde">adrian&#64;portfolio</span>
+          <span class="text-apagado">:</span>
+          <span class="text-azul">~</span>
+          <span class="text-apagado">$&nbsp;</span>
+          <span class="text-texto">{{ entrada.comando }}</span>
+        </p>
+        @for (linea of entrada.salida; track $index) {
+          <p class="text-texto whitespace-pre-wrap">{{ linea }}</p>
+        }
+      </div>
+    }
+
+    <!-- PROMPT INTERACTIVO -->
+    @if (mostrarPromptFinal()) {
+      <div>
+        <div class="flex items-center cursor-text" (click)="focusTerminal(true)">
+          <span class="text-verde">adrian&#64;portfolio</span>
+          <span class="text-apagado">:</span>
+          <span class="text-azul">~</span>
+          <span class="text-apagado">$&nbsp;</span>
+
+          <input
+            #terminalInput
+            class="bg-transparent outline-none text-texto flex-1 min-w-0"
+            [attr.aria-label]="'inicio.ariaInput' | transloco"
+            autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            [value]="terminalInputValue()"
+            (input)="onInput($event)"
+            (keydown.enter)="ejecutarComando()"
+          />
+        </div>
+
+        @if (!hireMode()) {
+          <p class="mt-2 text-apagado text-xs select-none">{{ 'inicio.hint' | transloco }}</p>
+        }
+      </div>
+    }
+
+    <!-- HIRE MODE -->
+    @if (hireMode()) {
+      <div class="mt-4 text-ambar space-y-1">
+        @for (line of hireOutput(); track $index) {
+          <div>{{ line }}</div>
+        }
+      </div>
+    }
+    </div>
+  </div>
 </div>
+}
