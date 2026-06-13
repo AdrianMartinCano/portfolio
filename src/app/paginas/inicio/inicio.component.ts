@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { SnakeComponent } from '../../componentes/snake/snake.component';
 import { ProyectosService } from '../../servicios/proyectos/proyectos.service';
+import { CvService } from '../../servicios/cv/cv.service';
 
 interface EntradaHistorial {
   comando: string;
@@ -42,6 +43,7 @@ export class InicioComponent implements OnInit {
 
   private transloco = inject(TranslocoService);
   private proyectosService = inject(ProyectosService);
+  cv = inject(CvService);
 
   constructor(private router: Router) {}
 
@@ -229,12 +231,5 @@ export class InicioComponent implements OnInit {
 
   private esperar(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  descargarCV() {
-    const link = document.createElement('a');
-    link.href = 'AdrianMartinCano.pdf';
-    link.download = 'Adrian Martin Cano CV.pdf';
-    link.click();
   }
 }

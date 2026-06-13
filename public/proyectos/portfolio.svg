@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Círculo gris oscuro (terminal) -->
+  <circle cx="100" cy="100" r="95" fill="#1e1e1e"/>
+
+  <!-- Texto blanco: <AM/> con JetBrains Mono -->
+  <text x="100" y="100" font-family="JetBrains Mono, monospace" font-size="54" font-weight="600" fill="white" text-anchor="middle" dominant-baseline="central" letter-spacing="2">&lt;AM/&gt;</text>
+</svg>

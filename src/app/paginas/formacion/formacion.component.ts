@@ -1,26 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-
-interface Formacion {
-  grado: string;
-  centro: string;
-  fechaInicio: string;
-  fechaFin: string;
-  competencias: string;
-}
+import { TranslocoPipe } from '@jsverse/transloco';
+import { SpinnerTerminalComponent } from '../../componentes/spinner-terminal/spinner-terminal.component';
+import { FormacionService } from '../../servicios/formacion/formacion.service';
 
 @Component({
   selector: 'app-formacion',
   standalone: true,
-  imports: [CommonModule, TranslocoPipe],
-  templateUrl: './formacion.component.html',
-  styleUrl: './formacion.component.css'
+  imports: [CommonModule, TranslocoPipe, SpinnerTerminalComponent],
+  templateUrl: './formacion.component.html'
 })
 export class FormacionComponent {
-  formaciones = toSignal(
-    inject(TranslocoService).selectTranslateObject<Formacion[]>('datos.formacion'),
-    { initialValue: [] as Formacion[] }
-  );
+  private servicio = inject(FormacionService);
+  formaciones = this.servicio.formaciones;
+  cargando = this.servicio.cargando;
 }

@@ -1,31 +1,35 @@
 <div class="p-4 md:p-8 text-sm md:text-base">
     <p class="mb-4">
-        <span class="text-verde">adrian&#64;portfolio</span><span class="text-apagado">:</span><span class="text-azul">~</span><span class="text-apagado">$&nbsp;</span><span class="text-texto">ls proyectos/</span>
+        <span class="text-verde">adrian&#64;portfolio</span><span class="text-apagado">:</span><span class="text-azul">~</span><span class="text-apagado">$&nbsp;</span><span class="text-texto">ls -l proyectos/</span>
     </p>
 
-    <ul class="list-none space-y-1">
-        <!-- Selección estilo TUI (fzf/htop): vídeo inverso, sin transición para que "salte" como una terminal -->
-        <li *ngFor="let proyecto of listaProyectos()"
-            class="group cursor-pointer flex items-baseline gap-2 sm:gap-4 px-2 py-1.5 hover:bg-texto"
-            (click)="verDetalles(proyecto.slug)">
-            <!-- El puntero solo existe en hover; en móvil no hay hover, así que se oculta y libera espacio -->
-            <span aria-hidden="true" class="hidden sm:inline w-3 flex-shrink-0 font-bold text-verde opacity-0 group-hover:opacity-100 group-hover:text-term">&gt;</span>
-            <span aria-hidden="true" class="text-ambar w-[10ch] flex-shrink-0 group-hover:text-term">{{ permisosSimbolicos(proyecto) }}</span>
-            <span aria-hidden="true" class="text-apagado w-[3ch] flex-shrink-0 group-hover:text-term">{{ permisos(proyecto) }}</span>
-            <span class="text-xs text-apagado w-16 sm:w-20 flex-shrink-0 group-hover:text-term">{{ proyecto.tipo }}</span>
-            <span class="font-bold text-azul group-hover:text-term">{{ proyecto.nombre }}/</span>
-        </li>
-    </ul>
+    @if (cargando() && listaProyectos().length === 0) {
+        <app-spinner-terminal [texto]="'comun.cargando' | transloco" />
+    } @else {
+        <ul class="list-none space-y-1">
+            <!-- Selección estilo TUI (fzf/htop): vídeo inverso, sin transición para que "salte" como una terminal -->
+            <li *ngFor="let proyecto of listaProyectos()"
+                class="group cursor-pointer flex items-baseline gap-2 sm:gap-4 px-2 py-1.5 hover:bg-texto"
+                (click)="verDetalles(proyecto.slug)">
+                <!-- El puntero solo existe en hover; en móvil no hay hover, así que se oculta y libera espacio -->
+                <span aria-hidden="true" class="hidden sm:inline w-3 flex-shrink-0 font-bold text-verde opacity-0 group-hover:opacity-100 group-hover:text-term">&gt;</span>
+                <span aria-hidden="true" class="text-ambar w-[10ch] flex-shrink-0 group-hover:text-term">{{ permisosSimbolicos(proyecto) }}</span>
+                <span aria-hidden="true" class="text-apagado w-[3ch] flex-shrink-0 group-hover:text-term">{{ permisos(proyecto) }}</span>
+                <span class="text-xs text-apagado w-16 sm:w-20 flex-shrink-0 group-hover:text-term">{{ proyecto.tipo }}</span>
+                <span class="font-bold text-azul group-hover:text-term">{{ proyecto.nombre }}/</span>
+            </li>
+        </ul>
 
-    <!-- Leyenda de permisos: solo los códigos que aparecen en la lista, una línea por código -->
-    <div class="text-xs md:text-sm text-apagado mt-6 space-y-0.5">
-        <p>{{ 'proyectos.leyenda.titulo' | transloco }}</p>
-        @for (codigo of permisosEnUso(); track codigo) {
-            <p>#&nbsp;&nbsp;<span class="text-ambar">{{ codigo }}</span> {{ 'proyectos.leyenda.' + codigo | transloco }}</p>
-        }
-    </div>
+        <!-- Leyenda de permisos: solo los códigos que aparecen en la lista, una línea por código -->
+        <div class="text-xs md:text-sm text-apagado mt-6 space-y-0.5">
+            <p>{{ 'proyectos.leyenda.titulo' | transloco }}</p>
+            @for (codigo of permisosEnUso(); track codigo) {
+                <p>#&nbsp;&nbsp;<span class="text-ambar">{{ codigo }}</span> {{ 'proyectos.leyenda.' + codigo | transloco }}</p>
+            }
+        </div>
 
-    <p class="text-xs md:text-sm text-apagado mt-2">
-        {{ 'proyectos.hint' | transloco }}
-    </p>
+        <p class="text-xs md:text-sm text-apagado mt-2">
+            {{ 'proyectos.hint' | transloco }}
+        </p>
+    }
 </div>

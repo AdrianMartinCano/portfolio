@@ -6,8 +6,7 @@ import { IdiomaService } from '../../servicios/idioma/idioma.service';
   selector: 'app-footer',
   standalone: true,
   imports: [TranslocoPipe],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.css'
+  templateUrl: './footer.component.html'
 })
 export class FooterComponent {
   idioma = inject(IdiomaService);

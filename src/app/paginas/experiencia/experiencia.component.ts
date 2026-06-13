@@ -1,26 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { TranslocoService } from '@jsverse/transloco';
-
-interface Experiencia {
-  puesto: string;
-  empresa: string;
-  fechaInicio: string;
-  fechaFin: string;
-  tareas: string[];
-}
+import { TranslocoPipe } from '@jsverse/transloco';
+import { SpinnerTerminalComponent } from '../../componentes/spinner-terminal/spinner-terminal.component';
+import { ExperienciaService } from '../../servicios/experiencia/experiencia.service';
 
 @Component({
   selector: 'app-experiencia',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './experiencia.component.html',
-  styleUrl: './experiencia.component.css'
+  imports: [CommonModule, TranslocoPipe, SpinnerTerminalComponent],
+  templateUrl: './experiencia.component.html'
 })
 export class ExperienciaComponent {
-  experiencia = toSignal(
-    inject(TranslocoService).selectTranslateObject<Experiencia[]>('datos.experiencia'),
-    { initialValue: [] as Experiencia[] }
-  );
+  private servicio = inject(ExperienciaService);
+  experiencia = this.servicio.experiencia;
+  cargando = this.servicio.cargando;
 }

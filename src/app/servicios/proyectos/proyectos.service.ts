@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { HttpClient } from '@angular/common/http';
 import { TranslocoService } from '@jsverse/transloco';
+import { datosDesdeApi } from '../datos-api/datos-api';
 
 export interface Repositorio {
   etiqueta: string;
@@ -29,14 +30,14 @@ export interface Proyecto {
   providedIn: 'root'
 })
 export class ProyectosService {
+  private http = inject(HttpClient);
   private transloco = inject(TranslocoService);
 
-  // Los datos viven en los JSON de idioma (public/i18n/*.json) y
-  // se reemiten traducidos cada vez que cambia el idioma activo
-  proyectos = toSignal(
-    this.transloco.selectTranslateObject<Proyecto[]>('datos.proyectos'),
-    { initialValue: [] as Proyecto[] }
-  );
+  // Pide los proyectos a la API (con el idioma activo); si falla, cae
+  // a los JSON locales de i18n (public/i18n/*.json)
+  private api = datosDesdeApi<Proyecto>(this.http, this.transloco, 'proyectos', 'proyectos');
+  proyectos = this.api.datos;
+  cargando = this.api.cargando;
 
   getProyecto(slug: string): Proyecto | undefined {
     return this.proyectos().find(p => p.slug === slug);

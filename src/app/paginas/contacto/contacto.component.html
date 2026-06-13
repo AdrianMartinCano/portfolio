@@ -1,29 +1,97 @@
-<div class="p-4 md:p-8 text-sm md:text-base">
-    <p class="mb-4">
-        <span class="text-verde">adrian&#64;portfolio</span><span class="text-apagado">:</span><span class="text-azul">~</span><span class="text-apagado">$&nbsp;</span><span class="text-texto">cat contacto.txt</span>
+<div class="p-4 md:p-8 text-sm md:text-base max-w-xl">
+    <!-- Enlaces arriba, formato log -->
+    <p class="mb-2">
+        <span class="text-verde">adrian&#64;portfolio</span><span class="text-apagado">:</span><span class="text-azul">~</span><span class="text-apagado">$&nbsp;</span><span class="text-texto">cat enlaces.log</span>
     </p>
-
-    <ul class="space-y-3">
+    <ul class="mb-8 font-mono text-xs md:text-sm space-y-1">
         <li>
             <a href="https://github.com/AdrianMartinCano" target="_blank" rel="noopener"
-               class="inline-flex items-center gap-3 text-texto hover:text-azul hover:underline transition-colors">
-                <i class="fab fa-github w-5 text-center"></i>
-                <span class="break-all">github.com/AdrianMartinCano</span>
+               class="group inline-flex items-baseline gap-2 hover:underline">
+                <span class="text-apagado">[<span class="text-verde">INFO</span>]</span>
+                <span class="text-azul w-16 inline-block">github</span>
+                <span class="text-apagado">&rarr;</span>
+                <span class="text-texto group-hover:text-azul break-all transition-colors">github.com/AdrianMartinCano</span>
             </a>
         </li>
         <li>
             <a href="https://www.linkedin.com/in/adrian-martin-cano/" target="_blank" rel="noopener"
-               class="inline-flex items-center gap-3 text-texto hover:text-azul hover:underline transition-colors">
-                <i class="fab fa-linkedin w-5 text-center"></i>
-                <span class="break-all">linkedin.com/in/adrian-martin-cano</span>
-            </a>
-        </li>
-        <li>
-            <a href="mailto:amc.1994.mca@gmail.com"
-               class="inline-flex items-center gap-3 text-texto hover:text-azul hover:underline transition-colors">
-                <i class="fas fa-envelope w-5 text-center"></i>
-                <span class="break-all">amc.1994.mca&#64;gmail.com</span>
+               class="group inline-flex items-baseline gap-2 hover:underline">
+                <span class="text-apagado">[<span class="text-verde">INFO</span>]</span>
+                <span class="text-azul w-16 inline-block">linkedin</span>
+                <span class="text-apagado">&rarr;</span>
+                <span class="text-texto group-hover:text-azul break-all transition-colors">linkedin.com/in/adrian-martin-cano</span>
             </a>
         </li>
     </ul>
+
+    <p class="mb-4">
+        <span class="text-verde">adrian&#64;portfolio</span><span class="text-apagado">:</span><span class="text-azul">~</span><span class="text-apagado">$&nbsp;</span><span class="text-texto">nano mensaje.txt</span><span class="cursor-parpadeo text-texto">_</span>
+    </p>
+
+    <form #f="ngForm" (ngSubmit)="enviar(f)" novalidate class="border border-borde rounded overflow-hidden">
+        <!-- Barra de título estilo editor -->
+        <div class="flex items-center justify-between px-3 py-1.5 border-b border-borde bg-chrome text-apagado text-xs">
+            <span>mensaje.txt</span>
+            <span *ngIf="f.dirty">{{ 'contacto.modificado' | transloco }}</span>
+        </div>
+
+        <div class="p-4 space-y-4 bg-term">
+            <!-- Honeypot: display:none, no posicionamiento fuera de pantalla,
+                 para que los gestores de contraseñas no lo autorellenen -->
+            <div class="hidden" aria-hidden="true">
+                <input type="text" name="campo_verificacion" tabindex="-1" autocomplete="off" [(ngModel)]="formulario.website" />
+            </div>
+
+            <div>
+                <label for="nombre" class="block text-apagado mb-1">
+                    <span class="text-verde">&gt;</span> {{ 'contacto.nombre' | transloco }}:
+                </label>
+                <input id="nombre" name="nombre" type="text" required maxlength="100" autocomplete="name"
+                       [(ngModel)]="formulario.nombre"
+                       class="w-full bg-transparent border-b border-borde text-texto px-1 py-1 focus:outline-none focus:border-azul" />
+            </div>
+
+            <div>
+                <label for="email" class="block text-apagado mb-1">
+                    <span class="text-verde">&gt;</span> {{ 'contacto.email' | transloco }}:
+                </label>
+                <input id="email" name="email" type="email" email required maxlength="150" autocomplete="email"
+                       #emailModel="ngModel"
+                       [(ngModel)]="formulario.email"
+                       class="w-full bg-transparent border-b border-borde text-texto px-1 py-1 focus:outline-none focus:border-azul" />
+                <p *ngIf="emailModel.invalid && emailModel.touched && emailModel.errors?.['email']"
+                   class="text-rojo text-xs mt-1">
+                    &#9888; {{ 'contacto.emailInvalido' | transloco }}
+                </p>
+            </div>
+
+            <div>
+                <label for="mensaje" class="block text-apagado mb-1">
+                    <span class="text-verde">&gt;</span> {{ 'contacto.mensaje' | transloco }}:
+                </label>
+                <textarea id="mensaje" name="mensaje" rows="5" required maxlength="2000"
+                          [(ngModel)]="formulario.mensaje"
+                          class="w-full bg-transparent border border-borde rounded text-texto px-2 py-1 focus:outline-none focus:border-azul resize-none"></textarea>
+            </div>
+        </div>
+
+        <!-- Barra de estado estilo editor de terminal: solo la acción -->
+        <div class="flex items-center px-3 py-2 border-t border-borde bg-chrome text-xs">
+            <button type="submit" [disabled]="f.invalid || enviando()"
+                    class="text-verde hover:underline disabled:text-apagado disabled:no-underline disabled:cursor-not-allowed">
+                <ng-container *ngIf="!enviando()">^X {{ 'contacto.enviar' | transloco }}</ng-container>
+                <ng-container *ngIf="enviando()">{{ 'contacto.enviando' | transloco }}</ng-container>
+            </button>
+        </div>
+    </form>
+
+    <!-- Salida de estado, fuera del formulario para que no se corte -->
+    <p *ngIf="estado() !== 'idle'" class="mt-3 text-xs md:text-sm font-mono break-words"
+       [class.text-verde]="estado() === 'ok'"
+       [class.text-ambar]="estado() === 'limite'"
+       [class.text-rojo]="estado() === 'error'">
+        <span *ngIf="estado() === 'ok'">&#10003; {{ 'contacto.exito' | transloco }}</span>
+        <span *ngIf="estado() === 'limite'">&#9888; {{ 'contacto.limite' | transloco }}</span>
+        <span *ngIf="estado() === 'error'">&#10007; {{ 'contacto.error' | transloco }}</span>
+    </p>
 </div>

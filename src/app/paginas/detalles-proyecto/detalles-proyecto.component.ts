@@ -7,7 +7,6 @@ import { ProyectosService } from '../../servicios/proyectos/proyectos.service';
 @Component({
   selector: 'app-detalles-proyecto',
   templateUrl: './detalles-proyecto.component.html',
-  styleUrls: ['./detalles-proyecto.component.css'],
   standalone: true,
   imports: [CommonModule, TranslocoPipe]
 })

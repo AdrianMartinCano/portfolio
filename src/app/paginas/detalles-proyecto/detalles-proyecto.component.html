@@ -1,5 +1,5 @@
 <div class="p-4 md:p-8 max-w-5xl text-sm md:text-base">
-    <button class="inline-flex items-center text-apagado hover:text-azul transition-colors cursor-pointer text-xs sm:text-sm mb-4"
+    <button class="inline-flex items-center text-azul hover:underline cursor-pointer text-xs sm:text-sm mb-4"
             (click)="volverAProyectos()">
         <i class="fas fa-arrow-left mr-2"></i>
         {{ 'detalles.volver' | transloco }}
@@ -21,7 +21,7 @@
         <!-- Imagen / captura -->
         @if (proyecto.imagen) {
             <img [src]="proyecto.imagen" [alt]="proyecto.nombre"
-                 class="w-full rounded border border-borde mb-6"
+                 class="w-full max-w-xs rounded border border-borde mb-6"
                  loading="lazy" />
         }
 
@@ -75,5 +75,13 @@
                 </a>
             }
         </div>
+
+        <!-- Volver al prompt: cierra la narrativa del "cat proyecto.md" -->
+        <button class="group inline-flex items-baseline mt-10 cursor-pointer text-xs sm:text-sm"
+                (click)="volverAProyectos()">
+            <span class="text-verde">adrian&#64;portfolio</span><span class="text-apagado">:</span><span class="text-azul">~</span><span class="text-apagado">$&nbsp;</span>
+            <span class="text-texto group-hover:text-azul group-hover:underline transition-colors">{{ 'detalles.volver' | transloco }}</span>
+            <span class="cursor-parpadeo text-texto">_</span>
+        </button>
     }
 </div>

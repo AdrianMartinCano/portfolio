@@ -80,3 +80,14 @@ body {
     background: var(--term-apagado);
 }
 
+/* Cursor de terminal parpadeante (reutilizable en cualquier componente) */
+.cursor-parpadeo {
+    animation: parpadeo 1s steps(1) infinite;
+}
+
+@keyframes parpadeo {
+    50% {
+        opacity: 0;
+    }
+}
+
