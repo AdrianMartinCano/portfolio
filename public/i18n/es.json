@@ -30,6 +30,7 @@
     "help": [
       "Comandos disponibles:",
       "  help               muestra esta ayuda",
+      "  replay             repite la animación de inicio",
       "  snake              juego de la serpiente",
       "  sudo hire adrian   inicia el proceso de contratación"
     ],

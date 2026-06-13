@@ -30,6 +30,7 @@
     "help": [
       "Available commands:",
       "  help               show this help",
+      "  replay             replay the intro animation",
       "  snake              snake game",
       "  sudo hire adrian   start the hiring process"
     ],
