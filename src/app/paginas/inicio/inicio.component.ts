@@ -1,4 +1,5 @@
 import { Component, computed, ElementRef, HostListener, inject, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterModule } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { SnakeComponent } from '../../componentes/snake/snake.component';
@@ -8,6 +9,8 @@ import { CvService } from '../../servicios/cv/cv.service';
 interface EntradaHistorial {
   comando: string;
   salida: string[];
+  // Si está, su traducción reemplaza a 'salida' y se recalcula al cambiar idioma
+  salidaKey?: string;
 }
 
 @Component({
@@ -45,11 +48,29 @@ export class InicioComponent implements OnInit {
   private proyectosService = inject(ProyectosService);
   cv = inject(CvService);
 
+  // Salida de 'help' como signal reactivo. selectTranslateObject espera a que
+  // el idioma esté cargado (evita que devuelva la clave en bruto) y re-emite
+  // al cambiar de idioma.
+  private helpLines = toSignal(
+    this.transloco.selectTranslateObject<string[]>('inicio.help'),
+    { initialValue: [] as string[] }
+  );
+
+  // Historial con las salidas traducibles resueltas en el idioma actual.
+  historialRender = computed<EntradaHistorial[]>(() =>
+    this.historial().map(e => {
+      if (e.salidaKey === 'inicio.help') {
+        const lineas = this.helpLines();
+        return { ...e, salida: Array.isArray(lineas) ? lineas : [] };
+      }
+      return e;
+    })
+  );
+
   constructor(private router: Router) {}
 
   // Cada comando devuelve las líneas que imprime en la terminal
   private comandos: Record<string, () => string[]> = {
-    'help': () => this.transloco.translateObject<string[]>('inicio.help'),
     'snake': () => {
       this.snakeActivo.set(true);
       return [];
@@ -58,27 +79,74 @@ export class InicioComponent implements OnInit {
       this.hireMode.set(true);
       this.hireOutput.set(this.transloco.translateObject<string[]>('inicio.hire'));
       return [];
+    },
+    'replay': () => {
+      this.replay();
+      return [];
     }
   };
 
+  // Recuerda si la intro ya se reprodujo en esta carga de la app. Al navegar
+  // a otra página y volver, el componente se recrea pero el flag (estático)
+  // persiste → la animación solo se ve una vez. Se reinicia al recargar.
+  private static introReproducida = false;
+
   ngOnInit() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      this.comando1.set('whoami');
-      this.comandoCat.set('cat sobre-mi.txt');
-      this.comandoNeofetch.set('neofetch');
-      this.comando2.set('ls ./');
-      this.mostrarSalida1.set(true);
-      this.mostrarSalidaCat.set(true);
-      this.mostrarSalidaNeofetch.set(true);
-      this.mostrarLinea2.set(true);
-      this.mostrarSalida2.set(true);
-      this.mostrarPromptFinal.set(true);
-      this.cursorEn.set(5);
-      this.focusTerminal();
+    const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Sin animación si el usuario la desactiva o si ya se vio en esta sesión.
+    if (reducirMovimiento || InicioComponent.introReproducida) {
+      this.mostrarTodoInstantaneo();
       return;
     }
 
+    InicioComponent.introReproducida = true;
     this.animar();
+  }
+
+  // Deja la terminal en su estado final, sin animar.
+  private mostrarTodoInstantaneo() {
+    this.comando1.set('whoami');
+    this.comandoCat.set('cat sobre-mi.txt');
+    this.comandoNeofetch.set('neofetch');
+    this.comando2.set('ls ./');
+    this.mostrarSalida1.set(true);
+    this.mostrarSalidaCat.set(true);
+    this.mostrarSalidaNeofetch.set(true);
+    this.mostrarLinea2.set(true);
+    this.mostrarSalida2.set(true);
+    this.mostrarPromptFinal.set(true);
+    this.cursorEn.set(5);
+    this.scrollToBottom();
+    this.focusTerminal();
+  }
+
+  // Reinicia los comandos de la intro a su estado inicial (antes de animar).
+  private resetIntro() {
+    this.comando1.set('');
+    this.comandoCat.set('');
+    this.comandoNeofetch.set('');
+    this.comando2.set('');
+    this.mostrarSalida1.set(false);
+    this.mostrarSalidaCat.set(false);
+    this.mostrarSalidaNeofetch.set(false);
+    this.mostrarLinea2.set(false);
+    this.mostrarSalida2.set(false);
+    this.mostrarPromptFinal.set(false);
+    this.cursorEn.set(1);
+  }
+
+  // Comando 'replay': limpia la sesión y vuelve a reproducir la intro.
+  private replay() {
+    // En el siguiente tick, para que se ejecute tras el eco del comando en
+    // el historial (ejecutarComando lo añade después de llamar a la acción).
+    setTimeout(() => {
+      this.historial.set([]);
+      this.hireMode.set(false);
+      this.snakeActivo.set(false);
+      this.resetIntro();
+      this.animar();
+    });
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -168,6 +236,14 @@ export class InicioComponent implements OnInit {
     // Enter en vacío: solo repite el prompt, como en bash
     if (!cmd) {
       this.historial.update(h => [...h, { comando: '', salida: [] }]);
+      this.scrollToBottom();
+      return;
+    }
+
+    // 'help' guarda la clave i18n (no el texto) para que se re-traduzca al
+    // cambiar de idioma; el resto guarda su salida literal.
+    if (cmd === 'help') {
+      this.historial.update(h => [...h, { comando: cmd, salida: [], salidaKey: 'inicio.help' }]);
       this.scrollToBottom();
       return;
     }
