@@ -2,7 +2,7 @@ import { Signal, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
 import { TranslocoService } from '@jsverse/transloco';
-import { catchError, switchMap, tap, timeout } from 'rxjs';
+import { catchError, distinctUntilChanged, switchMap, tap, timeout } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 const TIMEOUT_MS = 8000;
@@ -30,6 +30,9 @@ export function datosDesdeApi<T>(
 
   const datos = toSignal(
     transloco.langChanges$.pipe(
+      // El idioma se emite dos veces al arrancar (default + el persistido);
+      // sin esto se lanzaría y cancelaría una petición por endpoint de más.
+      distinctUntilChanged(),
       switchMap(lang => {
         cargando.set(true);
         return http.get<T[]>(`${environment.apiUrl}/api/${endpoint}`, { params: { lang } }).pipe(
