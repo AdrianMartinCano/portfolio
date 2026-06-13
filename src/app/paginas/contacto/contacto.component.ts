@@ -52,6 +52,9 @@ export class ContactoComponent implements OnDestroy {
         this.enviando.set(false);
         this.mostrarEstado('ok');
         f.resetForm();
+        // resetForm() deja los campos a null; los devolvemos a cadena vacía para
+        // que el contador (formulario.mensaje.length) no reviente el render.
+        this.formulario = { nombre: '', email: '', mensaje: '', website: '' };
       },
       error: (err) => {
         this.enviando.set(false);
