@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnDestroy, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -17,7 +17,7 @@ type EstadoEnvio = 'idle' | 'ok' | 'limite' | 'error';
 @Component({
   selector: 'app-contacto',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslocoPipe],
+  imports: [FormsModule, TranslocoPipe],
   templateUrl: './contacto.component.html'
 })
 export class ContactoComponent implements OnDestroy {

@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { TranslocoPipe } from '@jsverse/transloco';
 import { SpinnerTerminalComponent } from '../../componentes/spinner-terminal/spinner-terminal.component';
 import { Proyecto, ProyectosService } from '../../servicios/proyectos/proyectos.service';
@@ -9,7 +9,7 @@ import { Proyecto, ProyectosService } from '../../servicios/proyectos/proyectos.
   selector: 'app-proyectos',
   templateUrl: './proyectos.component.html',
   standalone: true,
-  imports: [CommonModule, TranslocoPipe, SpinnerTerminalComponent]
+  imports: [TranslocoPipe, SpinnerTerminalComponent]
 })
 export class ProyectosComponent {
   private servicio = inject(ProyectosService);

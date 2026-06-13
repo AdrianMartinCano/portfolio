@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { SpinnerTerminalComponent } from '../../componentes/spinner-terminal/spinner-terminal.component';
@@ -7,7 +7,7 @@ import { ExperienciaService } from '../../servicios/experiencia/experiencia.serv
 @Component({
   selector: 'app-experiencia',
   standalone: true,
-  imports: [CommonModule, TranslocoPipe, SpinnerTerminalComponent],
+  imports: [TranslocoPipe, SpinnerTerminalComponent],
   templateUrl: './experiencia.component.html'
 })
 export class ExperienciaComponent {

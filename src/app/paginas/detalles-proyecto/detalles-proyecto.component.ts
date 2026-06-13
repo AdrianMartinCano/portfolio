@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { TranslocoPipe } from '@jsverse/transloco';
 import { ProyectosService } from '../../servicios/proyectos/proyectos.service';
 
@@ -8,7 +8,7 @@ import { ProyectosService } from '../../servicios/proyectos/proyectos.service';
   selector: 'app-detalles-proyecto',
   templateUrl: './detalles-proyecto.component.html',
   standalone: true,
-  imports: [CommonModule, TranslocoPipe]
+  imports: [TranslocoPipe]
 })
 export class DetallesProyectoComponent {
   private proyectosService = inject(ProyectosService);
