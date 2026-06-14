@@ -1,33 +1,35 @@
 @import "tailwindcss";
 
-/* ── Temas de terminal (paleta tipo GitHub dark/light) ───────────── */
+/* ── Temas de terminal (paleta Tokyo Night / Tokyo Night Day) ─────── */
 
 :root {
     color-scheme: dark;
-    --fondo-pagina: #010409;
-    --term-fondo: #0d1117;
-    --term-chrome: #161b22;
-    --term-borde: #30363d;
-    --term-texto: #e6edf3;
-    --term-apagado: #8b949e;
-    --term-verde: #3fb950;
-    --term-azul: #58a6ff;
-    --term-rojo: #f85149;
-    --term-ambar: #d29922;
+    --fondo-pagina: #16161e;
+    --term-fondo: #1a1b26;
+    --term-chrome: #24283b;
+    --term-borde: #2f334d;
+    --term-texto: #c0caf5;
+    --term-apagado: #828bb8;
+    --term-verde: #9ece6a;
+    --term-azul: #7aa2f7;
+    --term-magenta: #bb9af7;
+    --term-rojo: #f7768e;
+    --term-ambar: #e0af68;
 }
 
 [data-tema='claro'] {
     color-scheme: light;
-    --fondo-pagina: #eaeef2;
-    --term-fondo: #ffffff;
-    --term-chrome: #f6f8fa;
-    --term-borde: #d0d7de;
-    --term-texto: #1f2328;
-    --term-apagado: #57606a;
-    --term-verde: #1a7f37;
-    --term-azul: #0969da;
-    --term-rojo: #cf222e;
-    --term-ambar: #9a6700;
+    --fondo-pagina: #c4c8da;
+    --term-fondo: #e1e2e7;
+    --term-chrome: #d5d6db;
+    --term-borde: #a8aec4;
+    --term-texto: #343b58;
+    --term-apagado: #6c7199;
+    --term-verde: #587539;
+    --term-azul: #2e7de9;
+    --term-magenta: #9854f1;
+    --term-rojo: #f52a65;
+    --term-ambar: #8c6c3e;
 }
 
 /* Expone las variables como utilidades de Tailwind:
@@ -42,6 +44,7 @@
     --color-apagado: var(--term-apagado);
     --color-verde: var(--term-verde);
     --color-azul: var(--term-azul);
+    --color-magenta: var(--term-magenta);
     --color-rojo: var(--term-rojo);
     --color-ambar: var(--term-ambar);
 }
@@ -79,6 +82,73 @@ body {
     background: var(--term-apagado);
 }
 
+/* ── Foco de teclado: un solo anillo, en color de acento, coherente ──
+   Solo en navegación con teclado (:focus-visible), nunca al hacer clic.
+   Los campos del formulario conservan su realce de borde con el ratón
+   y suman el anillo solo con teclado. */
+:focus-visible {
+    outline: 2px solid var(--term-azul);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* El prompt de la terminal usa el cursor parpadeante como indicador de foco;
+   el aro azul "chirría" ahí. El placeholder ya invita a escribir. */
+input.terminal-input:focus-visible {
+    outline: none;
+}
+
+/* ── Firma CRT: scanlines + glow de pantalla sobre la ventana ───────
+   Capa decorativa, no interactiva. Refuerza la idea de "monitor real"
+   y da sentido al espacio en blanco bajo el contenido. */
+.crt::before,
+.crt::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 30;
+}
+
+/* Líneas de barrido + viñeta hacia los bordes */
+.crt::after {
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.05) 3px,
+        rgba(0, 0, 0, 0.05) 3px
+    );
+    box-shadow: inset 0 0 140px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* Halo de fósforo muy tenue desde la parte superior, en el verde del tema */
+.crt::before {
+    background: radial-gradient(
+        120% 70% at 50% 0%,
+        color-mix(in srgb, var(--term-verde) 9%, transparent) 0%,
+        transparent 55%
+    );
+}
+
+[data-tema='claro'] .crt::after {
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.03) 3px,
+        rgba(0, 0, 0, 0.03) 3px
+    );
+    box-shadow: inset 0 0 120px 20px rgba(0, 0, 0, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .crt::after {
+        background: none;
+    }
+}
+
 /* Cursor de terminal parpadeante (reutilizable en cualquier componente) */
 .cursor-parpadeo {
     animation: parpadeo 1s steps(1) infinite;
@@ -89,4 +159,3 @@ body {
         opacity: 0;
     }
 }
-

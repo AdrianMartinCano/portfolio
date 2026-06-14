@@ -18,6 +18,7 @@
     "rol": "Java · Spring Boot · Angular · 3 years of experience",
     "hint": "# type 'help' to list the available commands",
     "ariaInput": "Terminal command input",
+    "placeholder": "type a command and press Enter…",
     "neoName": "Name",
     "neoRole": "Role",
     "neoRoleValue": "Full Stack Developer",
