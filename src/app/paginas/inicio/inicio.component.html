@@ -67,11 +67,12 @@
 
         @if (mostrarSalidaNeofetch()) {
           <div class="mt-2 flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-10">
-            <pre aria-hidden="true" class="text-azul leading-none text-[10px] sm:text-xs md:text-sm">    _     ____   ____   ___     _     _   _
-   / \   |  _ \ |  _ \ |_ _|   / \   | \ | |
-  / _ \  | | | || |_) | | |   / _ \  |  \| |
- / ___ \ | |_| ||  _ <  | |  / ___ \ | |\  |
-/_/   \_\|____/ |_| \_\|___|/_/   \_\|_| \_|</pre>
+            <pre aria-hidden="true" class="text-magenta leading-none text-[8px] sm:text-xs md:text-sm max-w-full" style="filter: drop-shadow(0 0 8px color-mix(in srgb, var(--term-magenta) 45%, transparent));"> █████╗ ██████╗ ██████╗ ██╗ █████╗ ███╗   ██╗
+██╔══██╗██╔══██╗██╔══██╗██║██╔══██╗████╗  ██║
+███████║██║  ██║██████╔╝██║███████║██╔██╗ ██║
+██╔══██║██║  ██║██╔══██╗██║██╔══██║██║╚██╗██║
+██║  ██║██████╔╝██║  ██║██║██║  ██║██║ ╚████║
+╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝</pre>
 
             <div class="grid grid-cols-[auto_auto] gap-x-3 gap-y-1 text-sm whitespace-nowrap">
               <span class="text-verde">{{ 'inicio.neoName' | transloco }}</span><span>Adrián Martín Cano</span>
@@ -144,8 +145,9 @@
 
           <input
             #terminalInput
-            class="bg-transparent outline-none text-texto flex-1 min-w-0"
+            class="terminal-input bg-transparent outline-none text-texto placeholder:text-apagado flex-1 min-w-0"
             [attr.aria-label]="'inicio.ariaInput' | transloco"
+            [attr.placeholder]="'inicio.placeholder' | transloco"
             autocomplete="off"
             autocapitalize="off"
             autocorrect="off"

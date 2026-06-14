@@ -18,6 +18,7 @@
     "rol": "Java · Spring Boot · Angular · 3 años de experiencia",
     "hint": "# escribe 'help' para ver los comandos",
     "ariaInput": "Entrada de comandos de la terminal",
+    "placeholder": "escribe un comando y pulsa Enter…",
     "neoName": "Nombre",
     "neoRole": "Rol",
     "neoRoleValue": "Desarrollador Full Stack",
