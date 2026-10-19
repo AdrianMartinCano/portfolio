@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { environment } from '../../../environments/environment';
+import { AnaliticaService } from '../../servicios/analitica/analitica.service';
 
 interface ContactoForm {
   nombre: string;
@@ -23,6 +24,7 @@ type EstadoEnvio = 'idle' | 'ok' | 'limite' | 'error';
 export class ContactoComponent implements OnDestroy {
   private http = inject(HttpClient);
   private transloco = inject(TranslocoService);
+  private analitica = inject(AnaliticaService);
 
   // Tras cuántos ms se oculta solo el mensaje de estado
   private static readonly AUTO_OCULTAR_MS = 6000;
@@ -51,6 +53,7 @@ export class ContactoComponent implements OnDestroy {
       next: () => {
         this.enviando.set(false);
         this.mostrarEstado('ok');
+        this.analitica.evento('contacto-enviado');
         f.resetForm();
         // resetForm() deja los campos a null; los devolvemos a cadena vacía para
         // que el contador (formulario.mensaje.length) no reviente el render.

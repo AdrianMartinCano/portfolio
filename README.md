@@ -45,17 +45,23 @@ Frontend interactivo que muestra proyectos, experiencia y formación, con interf
 
 ## 📖 Proyectos que muestra
 
-La API sirve 9 proyectos, cada uno con descripción, stack, características y caso de estudio. El orden es el de los JSON: primero lo más reciente y potente, al final el más antiguo.
+La API sirve 8 proyectos, cada uno con descripción, stack, características y caso de estudio.
+El orden es el de los JSON y está pensado para quien revisa el portfolio, que suele mirar solo
+los primeros: delante lo que más vende para un puesto full stack Java/Spring + Angular (en
+producción, con código visible y complejo), los proyectos de cliente antes que los personales, y
+al final el más antiguo.
 
 1. **Agarrao** — Full Stack · PWA de gasto de casa: lista compartida, tickets, €/unidad entre súper y gasolineras
-2. **La Caja de Latón** — Full Stack · web de una editorial (tienda con Stripe, blog y foro) · código privado
-3. **Ecosistema de librerías compartidas** — Full Stack · 20 librerías Angular + 17 módulos Spring Boot
-4. **Rumbo Fijo** — Full Stack · app de una empresa de mudanzas (PWA, permisos por rol) · código privado: enlaza a un repo escaparate con capturas (datos inventados) y la arquitectura; sin demo, porque la app es interna
-5. **WoW Auction Analyzer** — Full Stack · análisis del mercado de subastas de WoW + bot de Discord
-6. **Artesanos del Torno** — Full Stack · web oficial en producción con panel de administración
+2. **Ecosistema de librerías compartidas** — Full Stack · 20 librerías Angular + 17 módulos Spring Boot
+3. **La Caja de Latón** — Full Stack · web de una editorial (tienda con Stripe, blog y foro) · código privado
+4. **WoW Auction Analyzer** — Full Stack · análisis del mercado de subastas de WoW + bot de Discord
+5. **Rumbo Fijo** — Full Stack · app de una empresa de mudanzas (PWA, permisos por rol) · código privado: enlaza a un repo escaparate con capturas (datos inventados) y la arquitectura; sin demo, porque la app es interna
+6. **Artesanos del Torno** — Full Stack · web oficial en producción con panel de administración (PHP)
 7. **Portfolio** — Full Stack · esta misma web (Angular + Spring Boot)
-8. **KeyCloud** — Full Stack · gestor de contraseñas (cliente Angular + API Spring Boot)
-9. **Gas-Path** — Móvil · buscador de gasolineras (proyecto de fin de grado, 2024); su idea sigue viva dentro de Agarrao
+8. **Gas-Path** — Móvil · buscador de gasolineras (proyecto de fin de grado, 2024); su idea sigue viva dentro de Agarrao
+
+**KeyCloud** (gestor de contraseñas, dic 2024) salió del portfolio en oct 2026: estaba desfasado y
+lo que demostraba ya lo cubren mejor los proyectos nuevos. Su repo sigue en GitHub.
 
 ### Proyectos con código privado
 
@@ -65,7 +71,33 @@ Los proyectos de cliente (`750`) llevan `"repositorios": []`. La página de deta
 junto al botón de la demo.
 
 Los repos de código que sí se enseñan y se desarrollan en privado (Agarrao, librerías) enlazan a
-**espejos públicos** que se actualizan a mano cada pocos meses.
+**espejos públicos** que se actualizan a mano cada pocos meses. Rumbo Fijo enlaza a un repo
+**escaparate** (README y capturas, sin código).
+
+---
+
+## 📊 Analítica (Umami)
+
+Visitas y eventos con el **Umami propio** (`stats.pimon3d.com`), sin cookies (no hace falta
+banner). El script está en `src/index.html`:
+
+- `data-domains="www.codeadrianmc.dev"`: solo cuenta en producción; en local no envía nada.
+- `data-exclude-search="true"`: no guarda la parte `?…` de la URL.
+- Las visitas a cada página (también `/proyecto/<slug>`) las cuenta Umami solo, al cambiar de ruta.
+
+Eventos:
+
+| Evento | Cuándo | Datos | Dónde |
+|---|---|---|---|
+| `descargar-cv` | Descarga del CV (barra superior o portada) | — | `CvService` |
+| `ver-repositorio` | Botón de código de un proyecto | `proyecto` (slug) | atributos `data-umami-event` en `detalles-proyecto` |
+| `ver-demo` | Botón "Ver demo" | `proyecto` (slug) | ídem |
+| `contacto-enviado` | El formulario de contacto se envió bien | — | `ContactoComponent` |
+| `comando` | Comando de la terminal de la portada | `comando` (`help`, `snake`, `sudo hire adrian`, `replay`) | `InicioComponent` |
+
+Todo pasa por `AnaliticaService` (`servicios/analitica/`), que no hace nada si Umami no ha cargado
+(bloqueadores, local): la analítica nunca rompe la web. Solo se registran comandos que existen;
+lo que el visitante escriba a voleo no sale de su navegador.
 
 ---
 

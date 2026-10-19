@@ -5,6 +5,7 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { SnakeComponent } from '../../componentes/snake/snake.component';
 import { ProyectosService } from '../../servicios/proyectos/proyectos.service';
 import { CvService } from '../../servicios/cv/cv.service';
+import { AnaliticaService } from '../../servicios/analitica/analitica.service';
 
 interface EntradaHistorial {
   comando: string;
@@ -46,6 +47,7 @@ export class InicioComponent implements OnInit {
   private transloco = inject(TranslocoService);
   private proyectosService = inject(ProyectosService);
   cv = inject(CvService);
+  private analitica = inject(AnaliticaService);
 
   // Salida de 'help' como signal reactivo. selectTranslateObject espera a que
   // el idioma esté cargado (evita que devuelva la clave en bruto) y re-emite
@@ -269,6 +271,11 @@ export class InicioComponent implements OnInit {
 
     // 'help' guarda la clave i18n (no el texto) para que se re-traduzca al
     // cambiar de idioma; el resto guarda su salida literal.
+    // Solo los comandos que existen: lo que el visitante escriba a voleo no sale de su navegador
+    if (cmd === 'help' || this.comandos[cmd]) {
+      this.analitica.evento('comando', { comando: cmd });
+    }
+
     if (cmd === 'help') {
       this.historial.update(h => [...h, { comando: cmd, salida: [], salidaKey: 'inicio.help' }]);
       this.scrollToBottom();
