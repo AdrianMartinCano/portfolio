@@ -45,14 +45,27 @@ Frontend interactivo que muestra proyectos, experiencia y formación, con interf
 
 ## 📖 Proyectos que muestra
 
-La API sirve 6 proyectos, cada uno con descripción, stack, características y caso de estudio:
+La API sirve 9 proyectos, cada uno con descripción, stack, características y caso de estudio. El orden es el de los JSON: primero lo más reciente y potente, al final el más antiguo.
 
-1. **WoW Auction Analyzer** — Full Stack · análisis del mercado de subastas de WoW + bot de Discord
-2. **Artesanos del Torno** — Full Stack · web oficial en producción con panel de administración
-3. **Ecosistema de librerías compartidas** — Full Stack · suite reutilizable (Spring Boot + Angular)
-4. **Portfolio** — Full Stack · esta misma web (Angular + Spring Boot)
-5. **KeyCloud** — Full Stack · gestor de contraseñas (cliente Angular + API Spring Boot)
-6. **Gas-Path** — Móvil · buscador de gasolineras por ubicación (proyecto de fin de grado)
+1. **Agarrao** — Full Stack · PWA de gasto de casa: lista compartida, tickets, €/unidad entre súper y gasolineras
+2. **La Caja de Latón** — Full Stack · web de una editorial (tienda con Stripe, blog y foro) · código privado
+3. **Ecosistema de librerías compartidas** — Full Stack · 20 librerías Angular + 17 módulos Spring Boot
+4. **Rumbo Fijo** — Full Stack · app de una empresa de mudanzas (PWA, permisos por rol) + web corporativa · código privado
+5. **WoW Auction Analyzer** — Full Stack · análisis del mercado de subastas de WoW + bot de Discord
+6. **Artesanos del Torno** — Full Stack · web oficial en producción con panel de administración
+7. **Portfolio** — Full Stack · esta misma web (Angular + Spring Boot)
+8. **KeyCloud** — Full Stack · gestor de contraseñas (cliente Angular + API Spring Boot)
+9. **Gas-Path** — Móvil · buscador de gasolineras (proyecto de fin de grado, 2024); su idea sigue viva dentro de Agarrao
+
+### Proyectos con código privado
+
+Los proyectos de cliente (`750`) llevan `"repositorios": []`. La página de detalle lo detecta
+(`@empty` del `@for` de repositorios) y, en lugar del botón de código, muestra el comentario
+`# código privado: proyecto de cliente` (clave `detalles.codigoPrivado` de `public/i18n/*.json`),
+junto al botón de la demo.
+
+Los repos de código que sí se enseñan y se desarrollan en privado (Agarrao, librerías) enlazan a
+**espejos públicos** que se actualizan a mano cada pocos meses.
 
 ---
 

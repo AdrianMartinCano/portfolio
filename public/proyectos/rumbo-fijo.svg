@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Rumbo Fijo">
+<defs>
+<linearGradient id="oroClaro" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#F6DBA0"/><stop offset="1" stop-color="#D6A24F"/>
+</linearGradient>
+<linearGradient id="oroOscuro" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#E0B368"/><stop offset="1" stop-color="#A9702C"/>
+</linearGradient>
+</defs>
+<circle cx="256" cy="256" r="196" fill="none" stroke="url(#oroClaro)" stroke-width="5"/>
+<circle cx="256" cy="256" r="168" fill="none" stroke="url(#oroClaro)" stroke-width="5"/>
+<path d="M291.97 86.78L295.71 69.17M309.46 91.47L315.02 74.35M326.37 97.96L333.69 81.51M342.5 106.18L351.5 90.59M357.69 116.04L368.27 101.48M371.76 127.44L383.8 114.06M384.56 140.24L397.94 128.2M395.96 154.31L410.52 143.73M405.82 169.5L421.41 160.5M414.04 185.63L430.49 178.31M420.53 202.54L437.65 196.98M425.22 220.03L442.83 216.29M425.22 291.97L442.83 295.71M420.53 309.46L437.65 315.02M414.04 326.37L430.49 333.69M405.82 342.5L421.41 351.5M395.96 357.69L410.52 368.27M384.56 371.76L397.94 383.8M371.76 384.56L383.8 397.94M357.69 395.96L368.27 410.52M342.5 405.82L351.5 421.41M326.37 414.04L333.69 430.49M309.46 420.53L315.02 437.65M291.97 425.22L295.71 442.83M220.03 425.22L216.29 442.83M202.54 420.53L196.98 437.65M185.63 414.04L178.31 430.49M169.5 405.82L160.5 421.41M154.31 395.96L143.73 410.52M140.24 384.56L128.2 397.94M127.44 371.76L114.06 383.8M116.04 357.69L101.48 368.27M106.18 342.5L90.59 351.5M97.96 326.37L81.51 333.69M91.47 309.46L74.35 315.02M86.78 291.97L69.17 295.71M86.78 220.03L69.17 216.29M91.47 202.54L74.35 196.98M97.96 185.63L81.51 178.31M106.18 169.5L90.59 160.5M116.04 154.31L101.48 143.73M127.44 140.24L114.06 128.2M140.24 127.44L128.2 114.06M154.31 116.04L143.73 101.48M169.5 106.18L160.5 90.59M185.63 97.96L178.31 81.51M202.54 91.47L196.98 74.35M220.03 86.78L216.29 69.17" stroke="url(#oroClaro)" stroke-width="4" stroke-linecap="round"/>
+<mask id="fuera"><rect width="512" height="512" fill="#fff"/><path d="M214 168 L304 240 L286 240 L286 268 L142 268 L142 240 L124 240 ZM128 284 L128 254 L286 254 L292 218 L302 210 L360 210 L378 236 L390 246 L390 284 ZM186 288 m-25 0 a25 25 0 1 0 50 0 a25 25 0 1 0 -50 0 ZM336 288 m-25 0 a25 25 0 1 0 50 0 a25 25 0 1 0 -50 0 Z" fill="#000"/></mask>
+<g mask="url(#fuera)">
+<polygon points="256,40 239,256 256,256" fill="url(#oroClaro)"/><polygon points="256,40 273,256 256,256" fill="url(#oroOscuro)"/>
+<polygon points="256,472 273,256 256,256" fill="url(#oroClaro)"/><polygon points="256,472 239,256 256,256" fill="url(#oroOscuro)"/>
+<polygon points="384,256 256,239 256,256" fill="url(#oroClaro)"/><polygon points="384,256 256,273 256,256" fill="url(#oroOscuro)"/>
+<polygon points="128,256 256,273 256,256" fill="url(#oroClaro)"/><polygon points="128,256 256,239 256,256" fill="url(#oroOscuro)"/>
+<polygon points="325.3,186.7 243.98,243.98 256,256" fill="url(#oroClaro)"/><polygon points="325.3,186.7 268.02,268.02 256,256" fill="url(#oroOscuro)"/>
+<polygon points="325.3,325.3 268.02,243.98 256,256" fill="url(#oroClaro)"/><polygon points="325.3,325.3 243.98,268.02 256,256" fill="url(#oroOscuro)"/>
+<polygon points="186.7,325.3 268.02,268.02 256,256" fill="url(#oroClaro)"/><polygon points="186.7,325.3 243.98,243.98 256,256" fill="url(#oroOscuro)"/>
+<polygon points="186.7,186.7 243.98,268.02 256,256" fill="url(#oroClaro)"/><polygon points="186.7,186.7 268.02,243.98 256,256" fill="url(#oroOscuro)"/>
+<path d="M122 245L93 245M122 256L93 256M122 267L93 267M390 245L419 245M390 256L419 256M390 267L419 267" stroke="url(#oroClaro)" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="256" y="24" fill="url(#oroClaro)" font-family="Georgia,'Times New Roman',serif" font-size="46" text-anchor="middle" dominant-baseline="central">N</text>
+<text x="488" y="256" fill="url(#oroClaro)" font-family="Georgia,'Times New Roman',serif" font-size="46" text-anchor="middle" dominant-baseline="central">E</text>
+<text x="256" y="488" fill="url(#oroClaro)" font-family="Georgia,'Times New Roman',serif" font-size="46" text-anchor="middle" dominant-baseline="central">S</text>
+<text x="24" y="256" fill="url(#oroClaro)" font-family="Georgia,'Times New Roman',serif" font-size="46" text-anchor="middle" dominant-baseline="central">W</text>
+<path fill="url(#oroClaro)" fill-rule="evenodd" d="M214 168 L304 240 L286 240 L286 268 L142 268 L142 240 L124 240 ZM214 216 m-17 0 a17 17 0 1 0 34 0 a17 17 0 1 0 -34 0 Z"/>
+<path fill="url(#oroClaro)" fill-rule="evenodd" d="M128 284 L128 254 L286 254 L292 218 L302 210 L360 210 L378 236 L390 246 L390 284 ZM308 220 L354 220 L366 240 L308 240 Z"/>
+<path fill="url(#oroClaro)" fill-rule="evenodd" d="M186 288 m-25 0 a25 25 0 1 0 50 0 a25 25 0 1 0 -50 0 ZM186 288 m-9 0 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0 Z"/>
+<path fill="url(#oroClaro)" fill-rule="evenodd" d="M336 288 m-25 0 a25 25 0 1 0 50 0 a25 25 0 1 0 -50 0 ZM336 288 m-9 0 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0 Z"/>
+</svg>
