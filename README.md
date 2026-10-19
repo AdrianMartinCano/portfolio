@@ -50,7 +50,7 @@ La API sirve 9 proyectos, cada uno con descripción, stack, características y c
 1. **Agarrao** — Full Stack · PWA de gasto de casa: lista compartida, tickets, €/unidad entre súper y gasolineras
 2. **La Caja de Latón** — Full Stack · web de una editorial (tienda con Stripe, blog y foro) · código privado
 3. **Ecosistema de librerías compartidas** — Full Stack · 20 librerías Angular + 17 módulos Spring Boot
-4. **Rumbo Fijo** — Full Stack · app de una empresa de mudanzas (PWA, permisos por rol) + web corporativa · código privado
+4. **Rumbo Fijo** — Full Stack · app de una empresa de mudanzas (PWA, permisos por rol) · código privado: enlaza a un repo escaparate con capturas (datos inventados) y la arquitectura; sin demo, porque la app es interna
 5. **WoW Auction Analyzer** — Full Stack · análisis del mercado de subastas de WoW + bot de Discord
 6. **Artesanos del Torno** — Full Stack · web oficial en producción con panel de administración
 7. **Portfolio** — Full Stack · esta misma web (Angular + Spring Boot)
